@@ -157,7 +157,7 @@ return (
     >
       <div className="w-10 h-10 flex items-center justify-center">
         <img
-          src="/assadlogo.png"
+          src="/assadlogo.PNG"
           alt="Assad Advertisers"
           className="w-9 h-9 object-contain"
         />
@@ -632,7 +632,17 @@ transition={{ duration: 0.15 }}
         <div className="max-w-[1400px] mx-auto px-6 lg:px-10 grid lg:grid-cols-4 gap-10">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-5">
-              <img src={LOGO_URL} alt="Assad Advertisers" className="w-11 h-11 object-contain" style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.45))" }} />
+             <img
+  src="/assadlogo.PNG"
+  alt="Assad Advertisers"
+  className="w-11 h-11 object-contain block"
+  style={{
+    width: "44px",
+    height: "44px",
+    display: "block",
+    opacity: 1,
+  }}
+/>
               <span className="aa-display text-xl">Assad Advertisers</span>
             </div>
             <p className="aa-body aa-soft max-w-md">
