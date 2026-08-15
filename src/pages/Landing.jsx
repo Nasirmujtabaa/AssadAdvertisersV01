@@ -24,7 +24,7 @@ import {
   PhotographySection,
 } from "@/components/sections/ShowcaseSections";
 
-const LOGO_URL = "/assadlogo.png";
+const LOGO_URL = "/assadlogo.PNG";
 
 const NAV = [
   { label: "Home", href: "#home" },
