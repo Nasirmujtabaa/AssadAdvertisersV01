@@ -125,6 +125,7 @@ const Landing = () => {
   const [activeService, setActiveService] = useState(0);
   const [activeWork, setActiveWork] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const heroRef = useRef(null);
 useEffect(() => {
   const handleScroll = () => {
@@ -147,51 +148,98 @@ return (
   backdrop-blur-2xl bg-[var(--aa-bg-dark)]/80
   `}
 >
-  <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+  <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between relative">
 
-    {/* LOGO */}
-    <a
-      href="#home"
-      data-testid="nav-logo"
-      className="flex items-center gap-1 group"
+  {/* LOGO */}
+  <a
+    href="#home"
+    data-testid="nav-logo"
+    className="flex items-center gap-1 group"
+  >
+    <div className="w-10 h-10 flex items-center justify-center">
+      <img
+        src="/assadlogo.PNG"
+        alt="Assad Advertisers"
+        className="w-9 h-9 object-contain"
+      />
+    </div>
+
+    <span className="hidden sm:block font-semibold tracking-tight text-[15px]">
+      Assad Advertisers
+    </span>
+  </a>
+
+  {/* DESKTOP NAV */}
+  <nav className="hidden md:flex items-center gap-9">
+    {NAV.map((n) => (
+      <a
+        key={n.label}
+        href={n.href}
+        data-testid={`nav-link-${n.label.toLowerCase()}`}
+        className="aa-nav-link text-sm"
+      >
+        {n.label}
+      </a>
+    ))}
+  </nav>
+
+  {/* DESKTOP CONTACT */}
+  <a
+    href="#contact"
+    data-testid="nav-contact-btn"
+    className="aa-acc-pill nav-contact-btn text-sm flex items-center gap-2"
+  >
+    Contact Us <ArrowUpRight size={16} />
+  </a>
+
+  {/* MOBILE MENU BUTTON */}
+  <button
+    type="button"
+    className="mobile-menu-button"
+    aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+    aria-expanded={mobileMenuOpen}
+    onClick={() => setMobileMenuOpen((prev) => !prev)}
+  >
+    <span className={mobileMenuOpen ? "line line-1 open" : "line line-1"} />
+    <span className={mobileMenuOpen ? "line line-2 open" : "line line-2"} />
+    <span className={mobileMenuOpen ? "line line-3 open" : "line line-3"} />
+  </button>
+</div>
+
+<AnimatePresence>
+  {mobileMenuOpen && (
+    <motion.div
+      initial={{ opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.22 }}
+      className="mobile-menu-panel"
     >
-      <div className="w-10 h-10 flex items-center justify-center">
-        <img
-          src="/assadlogo.PNG"
-          alt="Assad Advertisers"
-          className="w-9 h-9 object-contain"
-        />
-      </div>
-
-      <span className="hidden sm:block font-semibold tracking-tight text-[15px]">
-        Assad Advertisers
-      </span>
-    </a>
-
-    {/* NAVIGATION */}
-    <nav className="hidden md:flex items-center gap-9">
       {NAV.map((n) => (
         <a
           key={n.label}
           href={n.href}
-          data-testid={`nav-link-${n.label.toLowerCase()}`}
-          className="aa-nav-link text-sm"
+          className="mobile-menu-link"
+          onClick={() => setMobileMenuOpen(false)}
         >
           {n.label}
+          <ArrowUpRight size={15} />
         </a>
       ))}
-    </nav>
 
-    {/* CONTACT */}
-    <a
-      href="#contact"
-      data-testid="nav-contact-btn"
-      className="aa-acc-pill text-sm flex items-center gap-2"
-    >
-      Contact Us <ArrowUpRight size={16} />
-    </a>
+      {/* CONTACT US INSIDE MOBILE MENU */}
+      <a
+        href="#contact"
+        className="mobile-menu-contact"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        Contact Us
+        <ArrowUpRight size={15} />
+      </a>
+    </motion.div>
+  )}
+</AnimatePresence>
 
-  </div>
 </header>
 
       {/* HERO */}
@@ -272,24 +320,34 @@ return (
           </motion.div>
 
           {/* Interactive tilted polaroid showcase with parallax */}
-          <Parallax speed={0.08} className="relative mt-24 h-[260px] sm:h-[320px] lg:h-[360px]">
-            {[
-              { src: "/imgb.jpg", rot: 6, x: "10%", delay: 0.6 },
-              { src: "img2.jpg", rot: -13,  x: "30%", delay: 0.6 },
-              { src: "/img1.png", rot: 6, x: "50%", delay: 0.6 },
-              
-              { src: "/img4.png", rot: -8,  x: "70%", delay: 0.6 },
-            ].map((c, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 120 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: c.delay, type: "spring", stiffness: 60 }}
-                className="aa-tilt-wrap absolute top-0 w-[160px] sm:w-[200px] lg:w-[240px] h-[200px] sm:h-[260px] lg:h-[320px]"
-                style={{ left: c.x, transform: `translateX(-50%)` }}
-                data-cursor="grow"
-              >
+<Parallax
+  speed={0.08}
+  className="hero-polaroids relative mt-24 h-[260px] sm:h-[320px] lg:h-[360px]"
+>
+  {[
+    { src: "/imgb.jpg", rot: 6, x: "10%", delay: 0.6 },
+    { src: "/img2.jpg", rot: -13, x: "30%", delay: 0.6 },
+    { src: "/img1.png", rot: 6, x: "50%", delay: 0.6 },
+    { src: "/img4.png", rot: -8, x: "70%", delay: 0.6 },
+  ].map((c, i) => (
+    <motion.div
+      key={i}
+      initial={{ opacity: 0, y: 120 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{
+        duration: 0.9,
+        delay: c.delay,
+        type: "spring",
+        stiffness: 60,
+      }}
+      className="hero-polaroid aa-tilt-wrap absolute top-0 w-[160px] sm:w-[200px] lg:w-[240px] h-[200px] sm:h-[260px] lg:h-[320px]"
+      style={{
+        left: c.x,
+        transform: "translateX(-50%)",
+      }}
+      data-cursor="grow"
+    >
                 <TiltCard
                   max={60}
                   className="aa-tilt-card aa-img-zoom w-full h-full overflow-hidden"
@@ -422,7 +480,7 @@ transition={{ duration: 0.15 }}
               </div>
 
               {/* Side CTAs */}
-              <div className="lg:col-span-2 flex flex-col gap-4">
+              <div className="lg:col-span-2 service-ctas">
                 <a href="#process" data-testid="services-cta-process" className="aa-card flex flex-col justify-between min-h-[170px]">
                   <span className="aa-body text-sm leading-snug aa-soft">Curious how the magic happens?</span>
                   <span className="flex items-center justify-between mt-4 text-sm font-semibold">See process <ArrowUpRight size={18} /></span>

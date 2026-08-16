@@ -130,12 +130,12 @@ export const CaseStudyChart = () => (
 /* ============================================================ */
 
 const PHOTOS = [
-  { src: "/88.png",  span: "row-span-2",       caption: "Pashmina House" },
-  { src: "/77.png",  span: "",                  caption: "Kashmir Crafts" },
-  { src: "/55.jpg",   span: "",                  caption: "Dal Lake Cafe"  },
-  { src: "/100.png",   span: "row-span-2",        caption: "Saffron Co."    },
-  { src: "/133.png", span: "",                  caption: "Qaswa Brand"    },
-  { src: "/122.png",  span: "col-span-2",         caption: "Editorial Series" },
+  { src: "/88.png", caption: "Pashmina House" },
+  { src: "/77.png", caption: "Kashmir Crafts" },
+  { src: "/55.jpg", caption: "Dal Lake Cafe" },
+  { src: "/100.png", caption: "Saffron Co." },
+  { src: "/133.png", caption: "Qaswa Brand" },
+  { src: "/122.png", caption: "Editorial Series" },
 ];
 
 export const PhotographySection = () => (
@@ -160,24 +160,26 @@ export const PhotographySection = () => (
         </motion.a>
       </motion.div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] sm:auto-rows-[220px] gap-4">
-        {PHOTOS.map((p, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: i * 0.06 }}
-            data-testid={`photo-${i}`}
-            className={`aa-img-zoom relative rounded-2xl overflow-hidden border border-[var(--aa-line)] bg-[var(--aa-surface)] group ${p.span}`}
-            data-cursor="grow"
-          >
-            <img src={p.src} alt={p.caption} className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <span className="absolute left-3 bottom-3 text-xs font-semibold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">{p.caption}</span>
-          </motion.div>
-        ))}
-      </div>
+    <div className="multimedia-grid">
+  {PHOTOS.map((p, i) => (
+    <motion.div
+      key={i}
+      initial={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+      whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: i * 0.06 }}
+      data-testid={`photo-${i}`}
+      className="aa-img-zoom relative overflow-hidden rounded-2xl border border-[var(--aa-line)] bg-[var(--aa-surface)]"
+      data-cursor="grow"
+    >
+      <img
+        src={p.src}
+        alt={p.caption}
+        className="w-full h-full object-cover"
+      />
+    </motion.div>
+  ))}
+</div>
     </div>
   </section>
 );
